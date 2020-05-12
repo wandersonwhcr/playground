@@ -1,12 +1,12 @@
-const fastify = require('fastify');
+const fastify = require('fastify')({ logger: true });
 
-const server = fastify({ logger: true });
-
-server.get('/', async (req, rep) => {
+fastify.get('/', async (req, rep) => {
   return {
     name: '@wandersonwhcr/playground',
     version: '1.0.0-alpha',
   };
 });
 
-module.exports = server;
+fastify.register(require('./routes/v1/games'), { prefix: 'v1' });
+
+module.exports = fastify;

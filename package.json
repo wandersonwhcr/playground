@@ -1,0 +1,13 @@
+{
+  "name": "@wandersonwhcr/playground",
+  "version": "1.0.0-alpha",
+  "description": "A Simple JavaScript Playground",
+  "main": "index.js",
+  "dependencies": {
+    "fastify": "^2.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -3,3 +3,7 @@ version: '3'
 services:
   api:
     image: node:14.2
+    environment:
+      PORT: '3000'
+  database:
+    image: mongo:4.2

@@ -1,23 +1,15 @@
 module.exports = function routes(fastify, options, done) {
   // Identificador
   fastify.addSchema({
-    $id: 'http://wandersonwhcr.github.io/playground/identifier',
-    type: 'object',
-    required: ['_id'],
-    additionalProperties: false,
-    properties: {
-      _id: {
-        $id: '#identifier',
-        type: 'string',
-        minLength: 1,
-        maxLength: 50,
-      },
-    },
+    $id: 'playground/identifier',
+    type: 'string',
+    minLength: 1,
+    maxLength: 50,
   });
 
   // Jogo
   fastify.addSchema({
-    $id: 'http://wandersonwhcr.github.io/playground/games',
+    $id: 'playground/games',
     type: 'object',
     required: ['name'],
     additionalProperties: false,
@@ -39,7 +31,7 @@ module.exports = function routes(fastify, options, done) {
         200: {
           type: 'array',
           items: {
-            $ref: 'http://wandersonwhcr.github.io/playground/games',
+            $ref: 'playground/games',
           },
         },
       },
@@ -61,11 +53,11 @@ module.exports = function routes(fastify, options, done) {
     schema: {
       params: {
         gameId: {
-          $ref: 'http://wandersonwhcr.github.io/playground/identifier#identifier',
+          $ref: 'playground/identifier',
         },
       },
       body: {
-        $ref: 'http://wandersonwhcr.github.io/playground/games',
+        $ref: 'playground/games',
       },
     },
     handler: async function GamesInsert(request, reply) {

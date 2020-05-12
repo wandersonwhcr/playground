@@ -10,7 +10,7 @@ services:
     user: '1000:1000'
     environment:
       PORT: '3000'
-      MONGO_URL: 'mongodb://database'
+      MONGO_URL: 'mongodb://database/games'
     working_dir: '/app'
     entrypoint: 'npm run'
     command: 'debug'

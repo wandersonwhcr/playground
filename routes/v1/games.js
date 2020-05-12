@@ -33,12 +33,12 @@ module.exports = function routes(fastify, options, done) {
       },
     },
     handler: async function GamesFetch(request, reply) {
-      return [
-        {
-          _id: 'abc',
-          name: 'Chrono Trigger',
-        },
-      ];
+      const games = await this.mongo.games.db
+        .collection('games')
+        .find()
+        .toArray();
+
+      return games;
     },
   });
 
@@ -50,8 +50,18 @@ module.exports = function routes(fastify, options, done) {
       params: {
         gameId: {
           type: 'string',
-          minLength: 1,
-          maxLength: 40,
+        },
+      },
+      body: {
+        type: 'object',
+        required: ['name'],
+        additionalProperties: false,
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 100,
+          },
         },
       },
       response: {
@@ -69,10 +79,16 @@ module.exports = function routes(fastify, options, done) {
       },
     },
     handler: async function GamesInsert(request, reply) {
-      return {
-        _id: request.params.gameId,
-        name: 'Chrono Trigger',
-      };
+      // Identificador
+      const identifier = { _id: request.params.gameId };
+      // Inicialização
+      const game = Object.assign({}, identifier, request.body);
+      // Inserir
+      await this.mongo.games.db
+        .collection('games')
+        .insert(game);
+      // Apresentação
+      return identifier;
     },
   });
 

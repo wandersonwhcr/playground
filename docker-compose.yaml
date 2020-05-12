@@ -12,6 +12,6 @@ services:
       PORT: '3000'
     working_dir: '/app'
     entrypoint: 'npm run'
-    command: 'start'
+    command: 'debug'
   database:
     image: mongo:4.2

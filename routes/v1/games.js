@@ -7,10 +7,12 @@ module.exports = function routes(fastify, options, done) {
     additionalProperties: false,
     properties: {
       _id: {
+        $id: '#_id',
         type: 'string',
         format: 'uuid',
       },
       name: {
+        $id: '#name',
         type: 'string',
         minLength: 1,
         maxLength: 50,
@@ -70,7 +72,7 @@ module.exports = function routes(fastify, options, done) {
     schema: {
       params: {
         gameId: {
-          $ref: 'playground/games#/properties/_id',
+          $ref: 'playground/games#_id',
         },
       },
     },

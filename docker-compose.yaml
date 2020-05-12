@@ -3,7 +3,15 @@ version: '3'
 services:
   api:
     image: node:14.2
+    volumes:
+      - '.:/app'
+    ports:
+      - '3000:3000'
+    user: '1000:1000'
     environment:
       PORT: '3000'
+    working_dir: '/app'
+    entrypoint: 'npm run'
+    command: 'start'
   database:
     image: mongo:4.2

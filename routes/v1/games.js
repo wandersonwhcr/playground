@@ -57,9 +57,16 @@ module.exports = function routes(fastify, options, done) {
     },
     handler: async function GamesDelete(request, reply) {
       // Remover
-      await this.mongo.games.db
+      const result = await this.mongo.games.db
         .collection('games')
         .deleteOne({ _id: request.params.gameId });
+      // Sucesso?
+      if (!result.deletedCount) {
+        // Erro!
+        reply.code(404);
+        // Apresentação
+        return '';
+      }
       // Configuração
       reply.code(204);
       // Apresentação

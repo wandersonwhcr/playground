@@ -70,8 +70,7 @@ module.exports = function routes(fastify, options, done) {
     schema: {
       params: {
         gameId: {
-          type: 'string',
-          format: 'uuid',
+          $ref: 'playground/games#/properties/_id',
         },
       },
     },

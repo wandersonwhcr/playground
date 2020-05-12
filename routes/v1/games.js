@@ -55,9 +55,35 @@ module.exports = function routes(fastify, options, done) {
       // Inserir
       const result = await this.mongo.games.db
         .collection('games')
-        .insert(request.body);
+        .insertOne(request.body);
+      // Configuração
+      reply.code(201);
       // Apresentação
-      return { _id: result.insertedIds[0] };
+      return { _id: result.insertedId };
+    },
+  });
+
+  // Remover
+  fastify.route({
+    method: 'DELETE',
+    url: '/games/:gameId',
+    schema: {
+      params: {
+        gameId: {
+          type: 'string',
+          format: 'uuid',
+        },
+      },
+    },
+    handler: async function GamesDelete(request, reply) {
+      // Remover
+      await this.mongo.games.db
+        .collection('games')
+        .deleteOne({ _id: request.params.gameId });
+      // Configuração
+      reply.code(204);
+      // Apresentação
+      return '';
     },
   });
 

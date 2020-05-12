@@ -1,12 +1,4 @@
 module.exports = function routes(fastify, options, done) {
-  // Identificador
-  fastify.addSchema({
-    $id: 'playground/identifier',
-    type: 'string',
-    minLength: 1,
-    maxLength: 50,
-  });
-
   // Jogo
   fastify.addSchema({
     $id: 'playground/games',
@@ -15,7 +7,8 @@ module.exports = function routes(fastify, options, done) {
     additionalProperties: false,
     properties: {
       _id: {
-        $ref: 'playground/identifier',
+        type: 'string',
+        format: 'uuid',
       },
       name: {
         type: 'string',
@@ -54,26 +47,17 @@ module.exports = function routes(fastify, options, done) {
     method: 'POST',
     url: '/games',
     schema: {
-      params: {
-        gameId: {
-          $ref: 'playground/identifier',
-        },
-      },
       body: {
         $ref: 'playground/games',
       },
     },
     handler: async function GamesInsert(request, reply) {
-      // Identificador
-      const identifier = { _id: request.params.gameId };
-      // Inicialização
-      const game = Object.assign({}, identifier, request.body);
       // Inserir
-      await this.mongo.games.db
+      const result = await this.mongo.games.db
         .collection('games')
-        .insert(game);
+        .insert(request.body);
       // Apresentação
-      return identifier;
+      return { _id: result.insertedIds[0] };
     },
   });
 

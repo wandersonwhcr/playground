@@ -11,9 +11,12 @@ module.exports = function routes(fastify, options, done) {
   fastify.addSchema({
     $id: 'playground/games',
     type: 'object',
-    required: ['name'],
+    required: ['_id', 'name'],
     additionalProperties: false,
     properties: {
+      _id: {
+        $ref: 'playground/identifier',
+      },
       name: {
         type: 'string',
         minLength: 1,
@@ -48,8 +51,8 @@ module.exports = function routes(fastify, options, done) {
 
   // Adicionar
   fastify.route({
-    method: 'PUT',
-    url: '/games/:gameId',
+    method: 'POST',
+    url: '/games',
     schema: {
       params: {
         gameId: {

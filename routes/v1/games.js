@@ -1,24 +1,6 @@
 module.exports = function routes(fastify, options, done) {
   // Jogo
-  fastify.addSchema({
-    $id: 'playground/games',
-    type: 'object',
-    required: ['_id', 'name'],
-    additionalProperties: false,
-    properties: {
-      _id: {
-        $id: '#_id',
-        type: 'string',
-        format: 'uuid',
-      },
-      name: {
-        $id: '#name',
-        type: 'string',
-        minLength: 1,
-        maxLength: 50,
-      },
-    },
-  });
+  fastify.addSchema(require('../../schemas/v1/games.json'));
 
   // Pesquisar
   fastify.route({

@@ -6,6 +6,8 @@ fastify.register(require('fastify-mongodb'), {
   name: 'games',
 });
 
-fastify.register(require('./routes/v1/games'), { prefix: 'v1' });
+fastify.addSchema(require('./schemas/v1/games'));
+
+fastify.register(require('./routes/v1/games'));
 
 module.exports = fastify;

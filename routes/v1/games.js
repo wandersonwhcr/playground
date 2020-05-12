@@ -1,17 +1,14 @@
 module.exports = function routes(fastify, options, done) {
-  // Jogo
-  fastify.addSchema(require('../../schemas/v1/games.json'));
-
   // Pesquisar
   fastify.route({
     method: 'GET',
-    url: '/games',
+    url: '/v1/games',
     schema: {
       response: {
         200: {
           type: 'array',
           items: {
-            $ref: 'playground/games',
+            $ref: '/v1/games',
           },
         },
       },
@@ -29,10 +26,10 @@ module.exports = function routes(fastify, options, done) {
   // Adicionar
   fastify.route({
     method: 'POST',
-    url: '/games',
+    url: '/v1/games',
     schema: {
       body: {
-        $ref: 'playground/games',
+        $ref: '/v1/games',
       },
     },
     handler: async function GamesInsert(request, reply) {
@@ -50,11 +47,11 @@ module.exports = function routes(fastify, options, done) {
   // Remover
   fastify.route({
     method: 'DELETE',
-    url: '/games/:gameId',
+    url: '/v1/games/:gameId',
     schema: {
       params: {
         gameId: {
-          $ref: 'playground/games#_id',
+          $ref: '/v1/games#_id',
         },
       },
     },

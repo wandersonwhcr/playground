@@ -1,5 +1,5 @@
 {
-  "$id": "playground/games",
+  "$id": "/v1/games",
   "type": "object",
   "required": ["_id", "name"],
   "additionalProperties": false,

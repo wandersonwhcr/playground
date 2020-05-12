@@ -1,4 +1,23 @@
 module.exports = function routes(fastify, options, done) {
+  // Jogo
+  fastify.addSchema({
+    $id: 'Game',
+    type: 'object',
+    required: ['_id', 'name'],
+    additionalProperties: false,
+    properties: {
+      _id: {
+        type: 'string',
+        pattern: '^[0-9a-z]$',
+      },
+      name: {
+        type: 'string',
+        minLength: 1,
+        maxLength: 50,
+      },
+    },
+  });
+
   // Pesquisar
   fastify.route({
     method: 'GET',
@@ -8,15 +27,7 @@ module.exports = function routes(fastify, options, done) {
         200: {
           type: 'array',
           items: {
-            type: 'object',
-            required: ['name'],
-            additionalProperties: false,
-            properties: {
-              name: {
-                type: 'string',
-                minLength: 1,
-              },
-            }
+            $ref: 'Game',
           },
         },
       },
@@ -24,7 +35,8 @@ module.exports = function routes(fastify, options, done) {
     handler: async function GamesFetch(request, reply) {
       return [
         {
-          "name": "Chrono Trigger",
+          _id: 'abc',
+          name: 'Chrono Trigger',
         },
       ];
     },
@@ -35,6 +47,13 @@ module.exports = function routes(fastify, options, done) {
     method: 'PUT',
     url: '/games/:gameId',
     schema: {
+      params: {
+        gameId: {
+          type: 'string',
+          minLength: 1,
+          maxLength: 40,
+        },
+      },
       response: {
         200: {
           type: 'object',
@@ -43,14 +62,17 @@ module.exports = function routes(fastify, options, done) {
           properties: {
             _id: {
               type: 'string',
-              maxLength: 1,
+              pattern: '^[0-9a-z]$',
             },
           },
         },
       },
     },
     handler: async function GamesInsert(request, reply) {
-      return { _id: request.params.gameId };
+      return {
+        _id: request.params.gameId,
+        name: 'Chrono Trigger',
+      };
     },
   });
 

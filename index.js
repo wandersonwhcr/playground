@@ -22,6 +22,7 @@ fastify.addSchema(require('./schemas/v1/games.json'));
 fastify.addSchema(require('./schemas/v1/publishers.json'));
 
 fastify.register(require('./routes/v1/games.js'));
+fastify.register(require('./routes/v1/publishers.js'));
 
 fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
   // Logging

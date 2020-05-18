@@ -69,6 +69,33 @@ module.exports = function publishers(fastify, options, done) {
     },
   });
 
+  // Remover
+  fastify.route({
+    method: 'DELETE',
+    url: '/v1/publishers/:publisherId',
+    schema: {
+      params: {
+        publisherId: {
+          $ref: '/v1/id',
+        },
+      },
+    },
+    handler: async function PublishersInsert(request, reply) {
+      // Atualização
+      const result = await this.mongo.games.db
+        .collection('publishers')
+        .deleteOne({ _id: request.params.publisherId });
+      // Sucesso?
+      if (!result.deletedCount) {
+        throw new httpErrors.NotFound();
+      }
+      // Configuração
+      reply.code(204);
+      // Apresentação
+      return '';
+    },
+  });
+
   // Feito!
   done();
 };

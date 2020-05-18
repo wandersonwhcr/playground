@@ -22,6 +22,9 @@ fastify.addSchema(require('./schemas/v1/games.json'));
 fastify.register(require('./routes/v1/games.js'));
 
 fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
+  // Logging
+  console.error(error);
+
   // Código?
   switch (error.code) {
     case 11000:
@@ -29,6 +32,7 @@ fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
       reply.code(409);
       break;
   }
+
   // Apresentação
   reply.send();
 });

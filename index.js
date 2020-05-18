@@ -37,7 +37,7 @@ fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
   }
 
   // Apresentação
-  reply.send();
+  reply.send(reply.body); // Padrão: undefined
 });
 
 module.exports = fastify;

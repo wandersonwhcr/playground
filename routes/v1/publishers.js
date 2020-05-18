@@ -1,4 +1,5 @@
 const uuid = require('uuid');
+const httpErrors = require('http-errors');
 
 module.exports = function publishers(fastify, options, done) {
   // Pesquisar
@@ -35,6 +36,36 @@ module.exports = function publishers(fastify, options, done) {
       reply.code(201);
       // Apresentação
       return identifier;
+    },
+  });
+
+  // Atualizar
+  fastify.route({
+    method: 'PUT',
+    url: '/v1/publishers/:publisherId',
+    schema: {
+      params: {
+        publisherId: {
+          $ref: '/v1/id',
+        },
+      },
+      body: {
+        $ref: '/v1/publishers',
+      },
+    },
+    handler: async function PublishersUpdate(request, reply) {
+      // Atualização
+      const result = await this.mongo.games.db
+        .collection('publishers')
+        .updateOne({ _id: request.params.publisherId }, { $set: request.body });
+      // Sucesso?
+      if (!result.matchedCount) {
+        throw new httpErrors.NotFound();
+      }
+      // Configuração
+      reply.code(204);
+      // Apresentação
+      return '';
     },
   });
 

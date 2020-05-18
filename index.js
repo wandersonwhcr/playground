@@ -6,9 +6,9 @@ fastify.register(require('fastify-mongodb'), {
   name: 'games',
 });
 
-fastify.addSchema(require('./schemas/v1/games'));
+fastify.addSchema(require('./schemas/v1/games.json'));
 
-fastify.register(require('./routes/v1/games'));
+fastify.register(require('./routes/v1/games.js'));
 
 fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
   // Código?

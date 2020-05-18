@@ -1,4 +1,15 @@
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')({
+  logger: true,
+  ajv: {
+    customOptions: {
+      removeAdditional: false,
+      useDefaults: false,
+      coerceTypes: false,
+      allErrors: true,
+      nullable: false,
+    },
+  },
+});
 
 fastify.register(require('fastify-mongodb'), {
   forceClose: true,

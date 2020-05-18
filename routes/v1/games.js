@@ -6,36 +6,13 @@ module.exports = function routes(fastify, options, done) {
   fastify.route({
     method: 'GET',
     url: '/v1/games',
-    schema: {
-      response: {
-        200: {
-          type: 'array',
-          items: {
-            type: 'object',
-            required: ['_id', 'game'],
-            properties: {
-              _id: {
-                $ref: '/v1/id',
-              },
-              game: {
-                $ref: '/v1/games',
-              },
-            },
-          },
-        },
-      },
-    },
     handler: async function GamesFetch(request, reply) {
       const games = await this.mongo.games.db
         .collection('games')
         .find()
         .toArray();
 
-      return games.map((game) => {
-        const element = { _id: game._id, game };
-        delete game._id;
-        return element;
-      });
+      return games;
     },
   });
 

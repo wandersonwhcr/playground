@@ -1,0 +1,5 @@
+{
+  "$id": "/v1/id",
+  "type": "string",
+  "format": "uuid"
+}

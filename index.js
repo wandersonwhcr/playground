@@ -17,6 +17,7 @@ fastify.register(require('fastify-mongodb'), {
   name: 'games',
 });
 
+fastify.addSchema(require('./schemas/v1/id.json'));
 fastify.addSchema(require('./schemas/v1/games.json'));
 
 fastify.register(require('./routes/v1/games.js'));

@@ -1,19 +1,14 @@
 {
   "$id": "/v1/games",
   "type": "object",
-  "required": ["_id", "name"],
+  "required": ["name"],
   "additionalProperties": false,
   "properties": {
-    "_id": {
-      "$id": "#_id",
-      "type": "string",
-      "format": "uuid"
-    },
     "name": {
       "$id": "#name",
       "type": "string",
       "minLength": 1,
-      "maxLength": 100
+      "maxLength": 255
     }
   }
 }

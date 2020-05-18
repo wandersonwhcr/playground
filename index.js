@@ -19,6 +19,7 @@ fastify.register(require('fastify-mongodb'), {
 
 fastify.addSchema(require('./schemas/v1/id.json'));
 fastify.addSchema(require('./schemas/v1/games.json'));
+fastify.addSchema(require('./schemas/v1/publishers.json'));
 
 fastify.register(require('./routes/v1/games.js'));
 

@@ -11,7 +11,16 @@ module.exports = function routes(fastify, options, done) {
         200: {
           type: 'array',
           items: {
-            $ref: '/v1/games',
+            type: 'object',
+            required: ['_id', 'game'],
+            properties: {
+              _id: {
+                $ref: '/v1/id',
+              },
+              game: {
+                $ref: '/v1/games',
+              },
+            },
           },
         },
       },
@@ -22,7 +31,11 @@ module.exports = function routes(fastify, options, done) {
         .find()
         .toArray();
 
-      return games;
+      return games.map((game) => {
+        const element = { _id: game._id, game };
+        delete game._id;
+        return element;
+      });
     },
   });
 

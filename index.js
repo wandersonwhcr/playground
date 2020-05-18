@@ -25,12 +25,15 @@ fastify.setErrorHandler(async function ErrorHandler(error, request, reply) {
   // Logging
   console.error(error);
 
-  // Código?
-  switch (error.code) {
-    case 11000:
-      // Conflict
-      reply.code(409);
-      break;
+  // Erro do MongoDB?
+  if (error.constructor.name === 'MongoError') {
+    // Código?
+    switch (error.code) {
+      case 11000:
+        // Conflict
+        reply.code(409);
+        break;
+    }
   }
 
   // Apresentação

@@ -1,3 +1,5 @@
+const httpErrors = require('http-errors');
+
 module.exports = function routes(fastify, options, done) {
   // Pesquisar
   fastify.route({
@@ -62,10 +64,7 @@ module.exports = function routes(fastify, options, done) {
         .deleteOne({ _id: request.params.gameId });
       // Sucesso?
       if (!result.deletedCount) {
-        // Erro!
-        reply.code(404);
-        // Apresentação
-        return '';
+        throw new httpErrors.NotFound();
       }
       // Configuração
       reply.code(204);
